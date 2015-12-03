@@ -45,11 +45,16 @@ class SpiderHelper
         return end(explode('/', $URL));
     }
 
+    static function getIDFromPoster($poster)
+    {
+        return explode('_', $poster)[0];
+    }
+
     static function getPosterData(Crawler $page)
     {
         return [
             'poster' => [
-                'url' => explode('147x210', $page->filter('div.mg > img')->attr('src'))[0],
+                'url' => explode('147x210', $page->filter('div.mg > a > img')->attr('src'))[0],
                 'sizes' => [
                     'small' => '70x100',
                     'medium' => '147x210',

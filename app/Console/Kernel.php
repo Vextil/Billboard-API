@@ -27,11 +27,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
+            Spiders\HomeSpider::updateCache();
             Spiders\CinemaSpider::updateCache();
             Spiders\CinemaKidsSpider::updateCache();
             Spiders\CinemaPremiereSpider::updateCache();
             Spiders\TheatreSpider::updateCache();
             Spiders\PricesSpider::updateCache();
-        })->everyMinute();
+        })->everyTenMinutes();
     }
 }
