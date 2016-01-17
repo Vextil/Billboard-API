@@ -29,7 +29,7 @@ class FunctionSpider extends BaseSpider
 		$function = [];
 		$function['name'] = $page->filter('div#info > div.hd > h3')->text();
 		SpiderHelper::extractLanguageAnd3DFromTitle($function['name'], $function['language'], $function['DDD']);
-		$function['poster'] = SpiderHelper::getPosterFromURL($page->filter('div#info > div.mg > img')->attr('src'));
+		$function['poster'] = SpiderHelper::getPosterFromURL($page->filter('div.mg > img')->attr('src'));
 		$function['rating'] = SpiderHelper::cleanRating($page->filter('div.rating > p')->text());
 		$info = $page->filter('div.film_info > p');
 		$function['premiere'] = SpiderHelper::cleanInfo($info->eq(0)->text());
