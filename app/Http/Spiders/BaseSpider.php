@@ -8,6 +8,7 @@ use Cache;
 class BaseSpider
 {
     protected static $cacheName = 'cache';
+    protected static $cacheDuration;
 
     static function getFromCache()
     {
@@ -19,7 +20,11 @@ class BaseSpider
 
     static function updateCache()
     {
-        Cache::forever(static::$cacheName, static::fetchData(new Client()));;
+        if (isset($cacheDuration)) {
+            Cache::put(static::$cacheName, static::fetchData(new Client()), static::$cacheDuration);
+        } else {
+            Cache::forever(static::$cacheName, static::fetchData(new Client()));
+        }
     }
 
     protected static function fetchData(Client $client)
