@@ -26,7 +26,7 @@ class HomeSpider extends BaseSpider
             $item['name'] = $node->filter('div.mt > h3 > a')->text();
             $item['poster'] = SpiderHelper::getPosterFromURL($node->filter('div.mg > a > img')->attr('src'));
             $item['id'] = SpiderHelper::getIDFromPoster($item['poster']);
-            SpiderHelper::extractLanguageAnd3DFromTitle($item['name'], $item['language'], $item['3D']);
+            SpiderHelper::extractLanguageAnd3DFromTitle($item['name'], $item['language'], $item['DDD']);
             array_push($items, $item);
         });
         return [

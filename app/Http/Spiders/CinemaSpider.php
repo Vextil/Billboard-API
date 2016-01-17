@@ -67,7 +67,7 @@ class CinemaSpider extends BaseSpider
 			if ($utf8_decode) {
 				$movie['name'] = utf8_decode($movie['name']);
 			}
-			SpiderHelper::extractLanguageAnd3DFromTitle($movie['name'], $movie['language'], $movie['3D']);
+			SpiderHelper::extractLanguageAnd3DFromTitle($movie['name'], $movie['language'], $movie['DDD']);
 			if ($node->filter('div.estreno')->count()) {
 				$movie['premiere'] = SpiderHelper::cleanDate($node->filter('div.estreno')->text());
 			}
