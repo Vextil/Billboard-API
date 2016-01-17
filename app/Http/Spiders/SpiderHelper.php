@@ -27,7 +27,12 @@ class SpiderHelper
             $language = 'esp';
             $threeD = false;
         }
-        $title = str_replace(array(' - Sub', ' -', ' 3D Sub', ' 3D Esp', ' 2D Sub', ' 2D Esp'), '', $title);
+        $title = str_replace(array(' - 2D Esp', ' - 3D Esp', ' - Esp', ' - Sub', ' -', ' 3D Sub', ' 3D Esp', ' 2D Sub', ' 2D Esp'), '', $title);
+    }
+
+    static function cleanInfo($info)
+    {
+        return explode(': ', $info)[1];
     }
 
     static function cleanDate($date)
@@ -54,7 +59,7 @@ class SpiderHelper
     {
         return [
             'poster' => [
-                'url' => explode('147x210', $page->filter('div.mg > a > img')->attr('src'))[0],
+                'url' => 'https://d3jovt6qzgy13f.cloudfront.net/upload/peliculas/afiche/',
                 'sizes' => [
                     'small' => '70x100',
                     'medium' => '147x210',
