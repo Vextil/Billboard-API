@@ -36,7 +36,32 @@ class FunctionSpider extends BaseSpider
 		$function['age_restriction'] = SpiderHelper::cleanInfo($info->eq(1)->text());
 		$function['genre'] = SpiderHelper::cleanInfo($info->eq(2)->text());
 		$function['duration'] = SpiderHelper::cleanInfo($info->eq(3)->text());
+		$function['description'] = $page->filter('div.film_text > p')->text();
+		$theatres = [];
+		$page->filter('ul#tabs_complejos_horarios > li > a')->each(function (Crawler $node) use (&$theatres, $page) {
+			$theatre = [];
+			// href structure: #tabs-ID_number, this code isolates the ID
+			$theatre['id'] = explode('-', explode('_', $node->attr('href'))[0])[1];
+			$theatre['name'] = $node->text();
+			$theatre['screenings'] = self::getScreenings($page, str_replace('#', '', $node->attr('href')));
+			array_push($theatres, $theatre);
+		});
+		$function['theatres'] = $theatres;
+
 		return $function;
+	}
+
+	private static function getScreenings(Crawler $page, $tabId) 
+	{
+		$screenings = [];
+		$page = $page->filter('div#' . $tabId);
+		$page->filter('div.shedule')->each(function (Crawler $node) use (&$screenings) {
+			$screening = [];
+			$screening['day'] = $node->filter('p')->text();
+			$screening['hours'] = explode('-', str_replace(' ', '', $node->filter('span')->text()));
+			array_push($screenings, $screening);
+		});
+		return $screenings;
 	}
 
 }
