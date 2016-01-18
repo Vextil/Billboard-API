@@ -20,7 +20,7 @@ class BaseSpider
 
     static function updateCache()
     {
-        if (isset($cacheDuration)) {
+        if (isset(static::$cacheDuration)) {
             Cache::put(static::$cacheName, static::fetchData(new Client()), static::$cacheDuration);
         } else {
             Cache::forever(static::$cacheName, static::fetchData(new Client()));
