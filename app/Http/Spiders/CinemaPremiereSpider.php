@@ -12,6 +12,6 @@ class CinemaPremiereSpider extends CinemaSpider
     {
         $page = $client->request('GET', 'http://www.movie.com.uy/cine/');
         $premieres = self::getMovies($page->filter('div#proximos_est'), false);
-        return array_merge(SpiderHelper::getPosterData($page), ['billboard' => $premieres]);
+        return array_merge(SpiderHelper::getPosterData($page), ['functions' => $premieres]);
     }
 }
